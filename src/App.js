@@ -45,18 +45,18 @@ handleSubmit = (e) => {
           <input type="submit" value="Load More Users"/>
         </form>
         <hr />
-        {!loading ? users.map(user =>
-          <div >
+        {!loading ? (
+          <div>
             <Grid
               style = {{ height: '400px' }}
               data = {gridData}
           >
-              <Column field="data.name.first" title="First Name" width="100px" />
-              <Column field="data.name.last" title="Last Name" width="100px" />
-              <Column field="user.location.city" title="City" width="100px" />
-              <Column field="user.cell" title="Cellphone" width="120px" />
-              <Column field="user.email" title="Email" width="100px" />
-              <Column field="user.registered.date" title="Reg Date" width="100px" />
+              <Column field="name.first" title="First Name" width="150px" />
+              <Column field="name.last" title="Last Name" width="150px" />
+              <Column field="location.city" title="City" width="200px" />
+              <Column field="cell" title="Cellphone" width="200px" />
+              <Column field="email" title="Email" width="300" />
+              <Column field="registered.date" title="Reg Date" width="300px" />
             </Grid>
           </div>
         ) : <Loading message="Loading users!"/> }
