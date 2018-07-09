@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      gridData: Object,
+      gridData: {users:[]},
       loading: false
   }
 }
@@ -20,9 +20,9 @@ getUsers(){
   axios('https://api.randomuser.me/?nat=US&results=5')
   .then(response => this.setState({
     gridData: {
-      users: [...this.state.gridData, ...response.data.results]
+      users: [...response.data.results, ...this.state.gridData.users]
     },
-    loading: false,
+    loading: false
   }));
 }
 
