@@ -1,0 +1,115 @@
+selectionChange (event) {
+        event.dataItem.selected = !event.dataItem.selected;
+        this.forceUpdate();       
+    }
+   
+    reqRowClick (event) {       
+        let last = this.lastSelectedIndex;
+        let current = this.state.reqList.findIndex(dataItem => dataItem === event.dataItem);
+          
+        
+        if (!event.nativeEvent.shiftKey) {
+            this.lastSelectedIndex = last = current;
+        }
+
+        if (!event.nativeEvent.ctrlKey) {
+            this.state.reqList.forEach(item => item.selected = false);
+        }
+        let select = !event.dataItem.selected;
+        for (let i = Math.min(last, current); i <= Math.max(last, current); i++) {
+            this.state.reqList[i].selected = select;
+        }
+        this.forceUpdate();
+    }
+
+
+
+enqRowClick (event) {
+        let last = this.lastSelectedIndex;
+        let current = this.state.enqList.findIndex(dataItem => dataItem === event.dataItem); 
+        
+        if (!event.nativeEvent.shiftKey) {
+            this.lastSelectedIndex = last = current;
+        }
+
+        if (!event.nativeEvent.ctrlKey) {
+            this.state.enqList.forEach(item => item.selected = false);
+        }
+        let select = !event.dataItem.selected;
+        for (let i = Math.min(last, current); i <= Math.max(last, current); i++) {
+            this.state.enqList[i].selected = select;
+        }
+        this.forceUpdate();
+    }
+
+
+
+
+
+
+
+
+render() {
+        
+        const {loadingReq,loadingEnq,reqList,enqList} = this.state  
+        return (    
+                <div className="col-lg-12">
+                    <div className="ibox float-e-margins">
+                        <div className="ibox-content">
+                            <div className="row" >                           
+                                {!loadingReq ? (                                    
+                                    <CaseRequisitions
+                                        StatefulGrid={<StatefulGrid 
+                                                            style={{ height: '350px' }}                                                                    
+                                                            data={reqList}
+                                                            selectedField="selected" 
+                                                            onSelectionChange={this.selectionChange}
+                                                            onRowClick={this.reqRowClick}           
+                                            >                                              
+                                                <Column field="RQ_REF" title="Req Ref" width="150px"  />
+                                                <Column field="RCV_DATE" title="Received Date" width="150px" />
+                                                <Column field="RQ_NOTES" title="Notes" width="150px" filterable={false} />                                                                   
+                                                <Column field="USER_INS" title="User Ins" width="150px" filterable={false} />                                     
+                                                <Column field="DATE_INS" title="Date Ins" width="150px" filterable={false}  />
+                                                <Column field="USER_UPD" title="User Upd" width="150px" filterable={false} />
+                                                <Column field="DATE_UPD" title="Date Upd" width="150px" filterable={false} />
+                                                <Column title="View / Delete"  width="160px" filterable={false} />                
+                                                                                       
+                                            </StatefulGrid>}                                        
+                                    />
+                                    ) : <Loading message="Loading Requisitions..."/> }
+                                    
+                                    {!loadingEnq ? (
+                                    <CaseEnquiries 
+                                        StatefulGrid={<StatefulGrid
+                                                            style={{ height: '350px' }}                                                                    
+                                                            data={enqList}
+                                                            selectedField="selected" 
+                                                            onSelectionChange={this.selectionChange}
+                                                            onRowClick={this.enqRowClick}           
+                                        
+                                            >
+                                                <Column field="ENQ_REF" title="Enq Ref" width="150px"  />
+                                                <Column field="SENT_DATE" title="Sent Date" width="150px" />
+                                                <Column field="STRS_ENQ_ID" title="Enquiry ID" width="150px"  />
+                                                <Column field="supplier.ADR_NAME" title="Suppliers" width="150px" />                                                                    
+                                                <Column field="USER_INS" title="User Ins" width="150px" filterable={false} />                                     
+                                                <Column field="DATE_INS" title="Date Ins" width="150px" filterable={false}  />
+                                                <Column field="USER_UPD" title="User Upd" width="150px" filterable={false} />
+                                                <Column field="DATE_UPD" title="Date Upd" width="150px" filterable={false} />
+                                                <Column title="View / Delete"  width="160px" filterable={false} />   
+                                            </StatefulGrid>}
+                                   
+                                    />
+
+                                ) : <Loading message="Loading Enquiries..."/> }
+                                
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        );
+    }
+
