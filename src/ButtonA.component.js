@@ -2,7 +2,6 @@ import { Button } from '@material-ui/core';
 import React, {Component} from 'react';
 import { SharedSnackbarConsumer } from './SharedSnackbar.context';
 import {withContext} from './withContext.js';
-import ExtraGrid from './ExtraGrid.js';
 
 class ButtonA extends Component{
 
